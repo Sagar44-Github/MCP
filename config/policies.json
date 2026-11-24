@@ -1,0 +1,31 @@
+{
+  "policy_id": "sentinel-demo-baseline",
+  "version": "2.3.0",
+  "default_agent": "demo-agent",
+  "agents": {
+    "demo-agent": {
+      "allow": ["read_document", "summarize_document", "deliver_to_sink"],
+      "deny": []
+    },
+    "sentinel-system": {
+      "allow": ["get_sink_status", "reset_sink"],
+      "deny": []
+    }
+  },
+  "trusted_destinations": ["local://sentinel-demo-sink"],
+  "unknown_lineage_external_verdict": "BLOCK",
+  "rules": [
+    {"id": "TOOL-ACCESS", "title": "Agent tool permission", "effect": "BLOCK", "priority": 1},
+    {"id": "ARGUMENT-SCHEMA", "title": "Discovered input schema", "effect": "BLOCK", "priority": 2},
+    {"id": "LINEAGE-UNKNOWN", "title": "Unknown or incomplete parent lineage", "effect": "BLOCK", "priority": 3},
+    {"id": "SENSITIVE-EXTERNAL", "title": "Sensitive data to external destination", "effect": "BLOCK", "priority": 4},
+    {"id": "UNKNOWN-EXTERNAL", "title": "Unknown lineage to external destination", "effect": "BLOCK", "priority": 5},
+    {"id": "DESTINATION-UNTRUSTED", "title": "Exact destination trust registry", "effect": "BLOCK", "priority": 6},
+    {"id": "RESTRICTED-DATA", "title": "Restricted data requires approval", "effect": "ASK", "priority": 7},
+    {"id": "CONFIDENTIAL-INTERNAL", "title": "Confidential data to approved local sink", "effect": "WARN", "priority": 8},
+    {"id": "INTERNAL-SINK", "title": "Internal data to approved local sink", "effect": "WARN", "priority": 9},
+    {"id": "PUBLIC-TRUSTED-SINK", "title": "Public data to approved sink", "effect": "ALLOW", "priority": 10},
+    {"id": "LABEL-UNKNOWN", "title": "Unrecognized data label", "effect": "BLOCK", "priority": 11},
+    {"id": "OBJECT-PAYLOAD-MISMATCH", "title": "Payload must match the registered object", "effect": "BLOCK", "priority": 12}
+  ]
+}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-sentinel"
+version = "0.8.0"
+description = "Phases 1–8: an MCP gateway with policy, provenance, drift detection, exact-request approvals, voice briefings, and regression coverage"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "jsonschema>=4.23,<5",
+  "mcp[cli]>=2,<3",
+  "pydantic>=2.11,<3",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[tool.setuptools]
+py-modules = ["app", "mcp_servers", "policy"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
